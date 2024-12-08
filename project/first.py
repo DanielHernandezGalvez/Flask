@@ -2,12 +2,35 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+# filtros personalizados
+@app.add_template_filter
+def today(date):
+    return date.strftime("%d-%m-%Y")
+
+# app.add_template_filter(today, "today") se puede registrar asi o como arriba
+
+# funcion personalizada
+@app.add_template_global # se registra en la aplicación y ya no es necesario enviar en el index
+def repeat(string, number):
+    return string * number
+
+# app.add_template_global(repeat, "repeat") también se registra así
+
+from datetime import datetime
+
 @app.route("/")
 @app.route("/index")
 def index():
     name = "kramer"
     friends = ["Daniel", "Alexis", "Juan"]
-    return render_template("index.html", name = name, friends = friends)
+    date = datetime.now()
+    return render_template(
+    "index.html",
+    name = name,
+    friends = friends,
+    date = date,
+    # repeat = repeat ya no es necesario por el decorador
+    )
 
 #string
 #int

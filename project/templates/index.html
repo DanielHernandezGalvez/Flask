@@ -1,20 +1,22 @@
-{% extends "base.html" %}
-{% block title %}Página de inicio{% endblock %}
+{% extends "base.html" %} {% block title %}Página de inicio{% endblock %} {%
+block content %}
 
-{% block content %}
+<h1>Plantillas co Jinja</h1>
+{% if name %}
+<p>Hola, {{ name | upper }}</p>
+{% else %}
+<p>Hola desconocido</p>
+{% endif %}
 
-    <h1>Plantillas co Jinja</h1>
-    {% if name %}
-    <p>Hola, {{ name }}</p>
-    {% else %}
-    <p>Hola desconocido</p>
-    {% endif %}
+<h2>Lista de amigos</h2>
+<ul>
+  {% for friend in friends | reverse %}
+  <li>{{ friend }}</li>
+  {% endfor %}
+</ul>
 
-    <h2>Lista de amigos</h2>
-    <ul>
-        {% for friend in friends %}
-        <li>{{ friend }}</li>
-        {% endfor %}
-    </ul>
+<p>La fecha de hoy es: {{ date | today }}</p>
 
-    {% endblock content %}
+<p>La frase repetida es: {{ repeat("hola ", 5)  }}</p>
+
+{% endblock content %}
