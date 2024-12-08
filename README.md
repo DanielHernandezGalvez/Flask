@@ -7,3 +7,5 @@
 > .venv\Scripts\activate
 
 $ pip install Flask
+
+flask --app hello run --debug
