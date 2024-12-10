@@ -1,4 +1,7 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 def create_app():
 
@@ -7,8 +10,11 @@ def create_app():
     # Configuración del proyecto
     app.config.from_mapping(
         DEBUG = True,
-        SECRETE_KEY = 'dev',
+        SECRET_KEY = 'dev',
+        SQLALCHEMY_DATABASE_URI = "sqlite:///todolist.db"
     )
+    
+    db.init_app(app)
     
     # registro de blueprint
     from . import todo
@@ -20,5 +26,8 @@ def create_app():
     @app.route("/")
     def index():
         return render_template("index.html")
+    
+    with app.app_context(): # esto va a migrar todos los modelos de la app a la base de datos
+        db.create_all()
     
     return app
